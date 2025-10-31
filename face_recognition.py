@@ -15,8 +15,21 @@ def detect_features(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
-        frame = cv2.rectangle(frame, (x, y), (x + w, y + h),
-                              color=(0, 255, 0), thickness=5)
+        corner_len = int(min(w, h) * 0.25)
+        color = (0, 255, 0)
+        thickness = 3
+
+        cv2.line(frame, (x, y), (x + corner_len, y), color, thickness)
+        cv2.line(frame, (x, y), (x, y + corner_len), color, thickness)
+
+        cv2.line(frame, (x + w, y), (x + w - corner_len, y), color, thickness)
+        cv2.line(frame, (x + w, y), (x + w, y + corner_len), color, thickness)
+
+        cv2.line(frame, (x, h + y), (x + corner_len, y + h), color, thickness)
+        cv2.line(frame, (x, h + y), (x, y + h - corner_len), color, thickness)
+
+        cv2.line(frame, (x + w, y + h), (x + w - corner_len, y + h), color, thickness)
+        cv2.line(frame, (x + w, y + h), (x + w, y + h - corner_len), color, thickness)
 
         face = frame[y: y + h, x: x + w]
         gray_face = gray[y: y + h, x: x + w]
