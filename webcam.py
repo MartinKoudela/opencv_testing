@@ -7,11 +7,12 @@ if not stream.isOpened():
     exit()
 
 fps = stream.get(cv2.CAP_PROP_FPS)
-width = stream.get(3)
-height = stream.get(4)
-output = cv2.VideoWriter("assets/4_stream.mp4",
-                         cv2.VideoWriter_fourcc('m', 'p', '4', 'v'),
-                         fps=fps, frameSize=(width, height))
+width = int(stream.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(stream.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+output = cv2.VideoWriter("assets/stream.mp4",
+            cv2.VideoWriter_fourcc('m', 'p', '4', 'v'),
+            fps=fps, frameSize=(width, height))
 
 while True:
     ret, frame = stream.read()
@@ -19,6 +20,8 @@ while True:
         print("Could not read frame :(")
         break
 
+    frame = cv2.resize(frame, (width, height))
+    output.write(frame)
     cv2.imshow("Webcam loaded!", frame)
     if cv2.waitKey(1) == ord('q'):
         break
