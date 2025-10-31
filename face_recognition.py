@@ -3,11 +3,12 @@ import cv2
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +
                                      "haarcascade_frontalface_default.xml")
 
-smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +
-                                      "haarcascade_smile.xml")
 
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +
-                                    "haarcascade_eye.xml")
+# smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +
+#                                    "haarcascade_smile.xml")
+
+# eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +
+#                                  "haarcascade_eye.xml")
 
 
 def detect_features(frame):
@@ -20,17 +21,18 @@ def detect_features(frame):
         face = frame[y: y + h, x: x + w]
         gray_face = gray[y: y + h, x: x + w]
 
-        smiles = smile_cascade.detectMultiScale(gray_face, 2.5, minNeighbors=15)
-        for (xp, yp, wp, hp) in smiles:
-            face = cv2.rectangle(face, (xp, yp), (xp + wp, yp + hp),
-                                  color=(0, 0, 255), thickness=5)
+    #        smiles = smile_cascade.detectMultiScale(gray_face, 2.5, minNeighbors=15)
+    #       for (xp, yp, wp, hp) in smiles:
+    #          face = cv2.rectangle(face, (xp, yp), (xp + wp, yp + hp),
+    #                               color=(0, 0, 255), thickness=5)
 
-        eyes = eye_cascade.detectMultiScale(gray_face, 2.5, minNeighbors=12)
-        for (xp, yp, wp, hp) in eyes:
-            face = cv2.rectangle(face, (xp, yp), (xp + wp, yp + hp),
-                          color=(255, 0, 0), thickness=5)
+    #    eyes = eye_cascade.detectMultiScale(gray_face, 2.5, minNeighbors=12)
+    #   for (xp, yp, wp, hp) in eyes:
+    #      face = cv2.rectangle(face, (xp, yp), (xp + wp, yp + hp),
+    #                   color=(255, 0, 0), thickness=5)
 
     return frame
+
 
 stream = cv2.VideoCapture(0)
 
